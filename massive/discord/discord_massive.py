@@ -2,7 +2,6 @@ import random
 
 from massive import massivizer
 
-
 MAX_MESSAGE_LENGTH = 2000
 MAX_EMBED_FIELD_LENGTH = 1024
 
