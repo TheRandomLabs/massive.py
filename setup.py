@@ -8,7 +8,7 @@ README = (CURRENT_DIRECTORY / "README.md").read_text()
 setup(
 	name="massive.py",
 	version="1.0.0",
-	description="Utillities for converting text to MASSIVE text, especially on Discord.",
+	description="Utilities for converting text to massive text, especially on Discord.",
 	long_description=README,
 	long_description_content_type="text/markdown",
 	keywords="massive text discord",
