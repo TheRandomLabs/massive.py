@@ -15,10 +15,8 @@ setup(
 	url="https://github.com/TheRandomLabs/massive.py",
 	project_urls={
 		"Bug Tracker": "https://github.com/TheRandomLabs/massive.py/issues",
-		"Documentation": "https://github.com/TheRandomLabs/massive.py/wiki",
 		"Source Code": "https://github.com/TheRandomLabs/massive.py"
 	},
-	download_url="https://github.com/TheRandomLabs/massive.py/v1.0.0.tar.gz",
 	author="TheRandomLabs",
 	author_email="therandomlabsinc@gmail.com",
 	license="MIT",
