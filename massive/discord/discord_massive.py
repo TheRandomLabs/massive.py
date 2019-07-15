@@ -57,26 +57,30 @@ def map_to_emoji(c, use_alternate):
 class Massive(massivizer.Massivizer):
 	def __init__(self, input_string):
 		super().__init__(input_string)
-		self.use_alternate = False
+		self.alternate = False
+		self.ends_with_emoji = False
 
 	def is_using_alternate(self):
-		return self.use_alternate
+		return self.alternate
 
 	def use_alternate(self, flag):
-		self.use_alternate = flag
+		self.alternate = flag
 		return self
 
 	def modify_input(self, line):
 		return line
 
 	def convert(self, c):
-		emoji = map_to_emoji(c, self.use_alternate)
+		self.ends_with_emoji = False
+
+		emoji = map_to_emoji(c, self.alternate)
 
 		if emoji:
+			self.ends_with_emoji = True
 			return ":" + emoji + ": "
 
 		return c
 
 	def modify_output(self, line):
-		# Remove extra space - TODO what happens when the line doesn't end with an emoji?
-		return line[:-1]
+		# Remove extra space
+		return line[:-1] if self.ends_with_emoji else line

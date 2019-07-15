@@ -10,7 +10,7 @@ class Massivizer(object):
 		assert input_string, "input_string is empty"
 
 		self.input_string = input_string
-		self.newlines_separate_parts = False
+		self.newlines_start_new_parts = False
 		self.max_part_length = 0
 
 		self.input_modifiers = []
@@ -20,10 +20,10 @@ class Massivizer(object):
 		return self.input_string
 
 	def do_newlines_separate_parts(self):
-		return self.newlines_separate_parts
+		return self.newlines_start_new_parts
 
 	def newlines_separate_parts(self, flag):
-		self.newlines_separate_parts = flag
+		self.newlines_start_new_parts = flag
 		return self
 
 	def get_max_part_length(self):
@@ -70,7 +70,7 @@ class Massivizer(object):
 			if c == '\r':
 				continue
 
-			if c == '\n' and self.newlines_separate_parts:
+			if c == '\n' and self.newlines_start_new_parts:
 				input_lines.append(current_line)
 				current_line = ""
 				continue
