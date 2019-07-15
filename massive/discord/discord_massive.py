@@ -37,18 +37,24 @@ ALTERNATE_MAPPINGS = {
 }
 
 
-def map_to_emoji(c, use_alternate):
+def map_to_emoji(c, use_alternate, main_mappings=None, alternate_mappings=None):
+	if not main_mappings:
+		main_mappings = MAIN_MAPPINGS
+
+	if not alternate_mappings:
+		alternate_mappings = ALTERNATE_MAPPINGS
+
 	if 'A' <= c <= 'Z':
 		c = c.lower()
 
 	if 'a' <= c <= 'z':
-		if use_alternate and c in ALTERNATE_MAPPINGS and random.choice([True, False]):
-			return random.choice(ALTERNATE_MAPPINGS[c])
+		if use_alternate and c in alternate_mappings and random.choice([True, False]):
+			return random.choice(alternate_mappings[c])
 
 		return "regional_indicator_" + c
 
-	if c in MAIN_MAPPINGS:
-		return MAIN_MAPPINGS[c]
+	if c in main_mappings:
+		return main_mappings[c]
 
 	return ""
 
@@ -58,6 +64,8 @@ class Massive(massivizer.Massivizer):
 		super().__init__(input_string)
 		self.alternate = False
 		self.ends_with_emoji = False
+		self.main_mappings = MAIN_MAPPINGS
+		self.alternate_mappings = ALTERNATE_MAPPINGS
 
 	def is_using_alternate(self):
 		return self.alternate
@@ -66,13 +74,26 @@ class Massive(massivizer.Massivizer):
 		self.alternate = flag
 		return self
 
-	def modify_input(self, line):
-		return line
+	def with_main_mappings(self, mappings):
+		assert mappings, "mappings is empty"
+		self.main_mappings = mappings
+
+	def with_alternate_mappings(self, mappings):
+		assert mappings, "mappings is empty"
+		self.alternate_mappings = mappings
+
+	def map_to_emoji(self, c):
+		return map_to_emoji(
+			c,
+			self.alternate,
+			main_mappings=self.main_mappings,
+			alternate_mappings=self.alternate_mappings
+		)
 
 	def convert(self, c):
 		self.ends_with_emoji = False
 
-		emoji = map_to_emoji(c, self.alternate)
+		emoji = self.map_to_emoji(c)
 
 		if emoji:
 			self.ends_with_emoji = True
