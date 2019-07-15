@@ -20,4 +20,4 @@ for part in massivized:
 
 The above code generates this:
 
-![](example.png)
+![](https://raw.githubusercontent.com/TheRandomLabs/massive.py/master/example.png)
