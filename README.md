@@ -2,7 +2,7 @@
 
 Utilities for converting text to massive text, especially on Discord.
 
-Vanessa-case or Vanessa text is massive.py's name for alternating caps.
+*Vanessa-case* or *Vanessa text* is massive.py's name for aLtErNaTiNg CaPs.
 
 **Example:**
 
@@ -18,4 +18,6 @@ for part in massivized:
     print(part)
 ```
 
-The above code generates this: ![](example.png)
+The above code generates this:
+
+![](example.png)
