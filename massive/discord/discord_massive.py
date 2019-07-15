@@ -33,6 +33,7 @@ MAIN_MAPPINGS = {
 ALTERNATE_MAPPINGS = {
 	"a": ["a"],
 	"b": ["b"],
+	"i": ["information_source"],
 	"m": ["m"],
 	"o": ["o2"],
 	"p": ["parking"],
