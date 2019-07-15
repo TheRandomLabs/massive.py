@@ -1,3 +1,3 @@
 # massive.py
 
-Utillities for converting text to MASSIVE text, especially on Discord.
+Utilities for converting text to massive text, especially on Discord.
