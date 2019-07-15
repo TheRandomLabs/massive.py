@@ -13,6 +13,8 @@ class RandomCharSwapper(object):
 		return swap_random_chars(input_string, self.predicate, self.swap_chance)
 
 
+# Swaps random sets of two characters if predicate returns True for both characters in the sets
+# Each viable set has an n in swap_chance chance of being swapped
 def swap_random_chars(input_string, predicate, swap_chance):
 	assert input_string, "input_string is empty"
 	assert isinstance(predicate('a'), bool), "predicate does not return a bool"

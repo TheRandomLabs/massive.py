@@ -5,6 +5,8 @@ from massive import massivizer
 MAX_MESSAGE_LENGTH = 2000
 MAX_EMBED_FIELD_LENGTH = 1024
 
+# These are the preferred mappings. Ideally, they don't look as out of place as the alternate
+# ones, i.e. if possible, the background is blue and the text is white.
 MAIN_MAPPINGS = {
 	"0": "zero",
 	"1": "one",
@@ -27,6 +29,7 @@ MAIN_MAPPINGS = {
 	"-": "no_entry"
 }
 
+# These are the alternate mappings. Go wild.
 ALTERNATE_MAPPINGS = {
 	"a": ["a"],
 	"b": ["b"],
@@ -62,8 +65,10 @@ def map_to_emoji(c, use_alternate, main_mappings=None, alternate_mappings=None):
 class Massive(massivizer.Massivizer):
 	def __init__(self, input_string):
 		super().__init__(input_string)
+
 		self.alternate = False
 		self.ends_with_emoji = False
+
 		self.main_mappings = MAIN_MAPPINGS
 		self.alternate_mappings = ALTERNATE_MAPPINGS
 
@@ -101,6 +106,6 @@ class Massive(massivizer.Massivizer):
 
 		return c
 
-	def modify_output(self, line):
-		# Remove extra space
-		return line[:-1] if self.ends_with_emoji else line
+	def modify_output(self, output_string):
+		# If the output ends with an emoji, there is an extra space at the end that must be removed
+		return output_string[:-1] if self.ends_with_emoji else output_string

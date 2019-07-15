@@ -41,26 +41,29 @@ class Massivizer(object):
 		self.random_char_swapper = swap_chars.RandomCharSwapper(predicate, chance)
 		return self
 
-	def modify_input(self, line):
-		return line
+	# To be implemented if necessary
+	def modify_input(self, input_string):
+		return input_string
 
 	@abc.abstractmethod
 	def convert(self, c):
 		return c
 
-	def modify_output(self, line):
-		return line
+	# To be implemented if necessary
+	def modify_output(self, output_string):
+		return output_string
 
-	def apply_input_modifiers(self, line):
+	# Applies random char swaps and custom input modifiers as well as modify_input
+	def apply_input_modifiers(self, input_string):
 		if self.random_char_swapper:
-			line = self.random_char_swapper.swap(line)
+			input_string = self.random_char_swapper.swap(input_string)
 
-		line = self.modify_input(line)
+		input_string = self.modify_input(input_string)
 
 		for input_modifier in self.input_modifiers:
-			line = input_modifier(line)
+			input_string = input_modifier(input_string)
 
-		return line
+		return input_string
 
 	def massivize(self):
 		input_lines = []
@@ -70,6 +73,7 @@ class Massivizer(object):
 			if c == '\r':
 				continue
 
+			# Useful if newlines are used to mark separate parts/messages
 			if c == '\n' and self.newlines_start_new_parts:
 				input_lines.append(current_line)
 				current_line = ""
