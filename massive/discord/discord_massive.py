@@ -64,8 +64,13 @@ def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings
 
 
 class Massive(massivizer.Massivizer):
-	def __init__(self, alternate_chance=0.0, **kwargs):
-		super().__init__(**kwargs)
+	def __init__(
+			self,
+			newlines_separate_parts=False,
+			max_part_length=MAX_MESSAGE_LENGTH,
+			alternate_chance=0.0
+	):
+		super().__init__(newlines_separate_parts, max_part_length)
 		self.alternate_chance = alternate_chance
 		self.main_mappings = None
 		self.alternate_mappings = None
