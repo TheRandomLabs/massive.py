@@ -26,6 +26,6 @@ The above code generates this:
 
 ## Massivizers
 
-**Vanessa-case/Vanessa text**: aLtErNaTiNg CaPs
-**Massive text (Discord)**: `regional_indicator` and other emojis on Discord.
-**Massive Vanessa text (Discord)**: A combination of massive text and lower case letters.
+* **Vanessa-case/Vanessa text**: aLtErNaTiNg CaPs
+* **Massive text (Discord)**: `regional_indicator` and other emojis on Discord.
+* **Massive Vanessa text (Discord)**: A combination of massive text and lower case letters.
