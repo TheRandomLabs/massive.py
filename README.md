@@ -6,7 +6,7 @@ Utilities for converting text to massive text, especially on Discord.
 
 ## Installation
 
-`$ pip install massive.py`
+	$ pip install massive.py
 
 ## Example
 
