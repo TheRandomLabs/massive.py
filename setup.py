@@ -21,8 +21,8 @@ setup(
 	author_email="therandomlabsinc@gmail.com",
 	license="MIT",
 	classifiers=[
-		"Development Status :: 2 - Beta",
-		"Intended Audience :: Developers"
+		"Development Status :: 4 - Beta",
+		"Intended Audience :: Developers",
 		"License :: OSI Approved :: MIT License",
 		"Operating System :: OS Independent",
 		"Programming Language :: Python :: 3.7",
