@@ -19,7 +19,7 @@ class MassiveVanessa(discord_massive.Massive):
 			if lower:
 				return c.lower()
 
-			emoji = self.__map_to_emoji(c)
+			emoji = self.map_to_emoji(c)
 
 			if emoji:
 				self.__ends_with_emoji = True

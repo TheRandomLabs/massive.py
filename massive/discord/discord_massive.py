@@ -100,7 +100,7 @@ class Massive(massivizer.Massivizer):
 	def alternate_mappings(self, mappings):
 		self.__alternate_mappings = mappings or ALTERNATE_MAPPINGS
 
-	def __map_to_emoji(self, c):
+	def map_to_emoji(self, c):
 		return map_to_emoji(
 			c,
 			self.alternate_chance,
@@ -114,7 +114,7 @@ class Massive(massivizer.Massivizer):
 	def convert(self, c):
 		self.__ends_with_emoji = False
 
-		emoji = self.__map_to_emoji(c)
+		emoji = self.map_to_emoji(c)
 
 		if emoji:
 			self.__ends_with_emoji = True
