@@ -41,7 +41,7 @@ ALTERNATE_MAPPINGS = {
 }
 
 
-def map_to_emoji(c, use_alternate, main_mappings=None, alternate_mappings=None):
+def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings=None):
 	if not main_mappings:
 		main_mappings = MAIN_MAPPINGS
 
@@ -52,7 +52,7 @@ def map_to_emoji(c, use_alternate, main_mappings=None, alternate_mappings=None):
 		c = c.lower()
 
 	if 'a' <= c <= 'z':
-		if use_alternate and c in alternate_mappings and random.choice([True, False]):
+		if c in alternate_mappings and random.random() < alternate_chance:
 			return random.choice(alternate_mappings[c])
 
 		return "regional_indicator_" + c
@@ -64,49 +64,59 @@ def map_to_emoji(c, use_alternate, main_mappings=None, alternate_mappings=None):
 
 
 class Massive(massivizer.Massivizer):
-	def __init__(self, input_string):
-		super().__init__(input_string)
+	def __init__(self, alternate_chance=0.0, **kwargs):
+		super().__init__(**kwargs)
+		self.alternate_chance = alternate_chance
+		self.main_mappings = None
+		self.alternate_mappings = None
+		self.__ends_with_emoji = False
 
-		self.alternate = False
-		self.ends_with_emoji = False
+	@property
+	def alternate_chance(self):
+		return self.__alternate_chance
 
-		self.main_mappings = MAIN_MAPPINGS
-		self.alternate_mappings = ALTERNATE_MAPPINGS
+	@alternate_chance.setter
+	def alternate_chance(self, chance):
+		self.__alternate_chance = max(0.0, min(chance, 1.0))
 
-	def is_using_alternate(self):
-		return self.alternate
+	@property
+	def main_mappings(self):
+		return self.__main_mappings
 
-	def use_alternate(self, flag):
-		self.alternate = flag
-		return self
+	@main_mappings.setter
+	def main_mappings(self, mappings):
+		self.__main_mappings = mappings or MAIN_MAPPINGS
 
-	def with_main_mappings(self, mappings):
-		assert mappings, "mappings is empty"
-		self.main_mappings = mappings
+	@property
+	def alternate_mappings(self):
+		return self.__alternate_mappings
 
-	def with_alternate_mappings(self, mappings):
-		assert mappings, "mappings is empty"
-		self.alternate_mappings = mappings
+	@alternate_mappings.setter
+	def alternate_mappings(self, mappings):
+		self.__alternate_mappings = mappings or ALTERNATE_MAPPINGS
 
-	def map_to_emoji(self, c):
+	def __map_to_emoji(self, c):
 		return map_to_emoji(
 			c,
-			self.alternate,
+			self.alternate_chance,
 			main_mappings=self.main_mappings,
 			alternate_mappings=self.alternate_mappings
 		)
 
-	def convert(self, c):
-		self.ends_with_emoji = False
+	def preprocess_input(self, input_string):
+		return input_string
 
-		emoji = self.map_to_emoji(c)
+	def convert(self, c):
+		self.__ends_with_emoji = False
+
+		emoji = self.__map_to_emoji(c)
 
 		if emoji:
-			self.ends_with_emoji = True
+			self.__ends_with_emoji = True
 			return ":" + emoji + ": "
 
 		return c
 
-	def modify_output(self, output_string):
+	def finalize_output(self, output_string):
 		# If the output ends with an emoji, there is an extra space at the end that must be removed
-		return output_string[:-1] if self.ends_with_emoji else output_string
+		return output_string[:-1] if self.__ends_with_emoji else output_string

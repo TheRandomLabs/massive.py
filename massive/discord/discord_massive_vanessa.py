@@ -4,8 +4,11 @@ from massive.discord import discord_massive
 
 
 class MassiveVanessa(discord_massive.Massive):
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+
 	def convert(self, c):
-		self.ends_with_emoji = False
+		self.__ends_with_emoji = False
 
 		if c == ' ':
 			return "  "
@@ -16,10 +19,10 @@ class MassiveVanessa(discord_massive.Massive):
 			if lower:
 				return c.lower()
 
-			emoji = self.map_to_emoji(c)
+			emoji = self.__map_to_emoji(c)
 
 			if emoji:
-				self.ends_with_emoji = True
+				self.__ends_with_emoji = True
 				return ":" + emoji + ": "
 
 			return c.upper()

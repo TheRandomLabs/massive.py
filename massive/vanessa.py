@@ -2,14 +2,20 @@ from massive import massivizer
 
 
 class Vanessa(massivizer.Massivizer):
-	def __init__(self, input_string):
-		super().__init__(input_string)
-		self.uppercase = False
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		self.__uppercase = False
+
+	def preprocess_input(self, input_string):
+		return input_string.lower()
 
 	def convert(self, c):
-		self.uppercase = not self.uppercase
+		self.__uppercase = not self.__uppercase
 
-		if self.uppercase:
+		if self.__uppercase:
 			return c.upper()
 
-		return c.lower()
+		return c
+
+	def finalize_output(self, output_string):
+		return output_string
