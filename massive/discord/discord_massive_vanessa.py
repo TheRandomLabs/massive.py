@@ -4,8 +4,17 @@ from massive.discord import discord_massive
 
 
 class MassiveVanessa(discord_massive.Massive):
-	def __init__(self, **kwargs):
+	def __init__(self, massive_chance=0.5, **kwargs):
 		super().__init__(**kwargs)
+		self.massive_chance = 0.5
+
+	@property
+	def massive_chance(self):
+		return self.__massive_chance
+
+	@massive_chance.setter
+	def massive_chance(self, chance):
+		self.__massive_chance = max(0.0, min(chance, 1.0))
 
 	def convert(self, c):
 		self.__ends_with_emoji = False
@@ -13,7 +22,7 @@ class MassiveVanessa(discord_massive.Massive):
 		if c == ' ':
 			return "  "
 
-		lower = random.choice([True, False])
+		lower = random.random() < self.massive_chance
 
 		if 'a' <= c.lower() <= 'z':
 			if lower:
