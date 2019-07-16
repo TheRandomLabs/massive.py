@@ -1,10 +1,14 @@
 # massive.py
 
+[![Foo](http://badge.fury.io/py/area.svg)](http://badge.fury.io/py/area)
+
 Utilities for converting text to massive text, especially on Discord.
 
-**Note:** aLtErNaTiNg CaPs has been dubbed *Vanessa-case* or *Vanessa text* by massive.py.
+## Installation
 
-**Example:**
+`$ pip install massive.py`
+
+## Example
 
 ```python
 from massive.discord import discord_massive
@@ -19,3 +23,9 @@ for part in massivizer.massivize("Massive text"):
 The above code generates this:
 
 ![](https://raw.githubusercontent.com/TheRandomLabs/massive.py/master/example.png)
+
+## Massivizers
+
+**Vanessa-case/Vanessa text**: aLtErNaTiNg CaPs
+**Massive text (Discord)**: `regional_indicator` and other emojis on Discord.
+**Massive Vanessa text (Discord)**: A combination of massive text and lower case letters.
