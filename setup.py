@@ -7,7 +7,7 @@ README = (CURRENT_DIRECTORY / "README.md").read_text()
 
 setup(
 	name="massive.py",
-	version="0.1.0",
+	version="0.2.0",
 	description="Utilities for converting text to massive text, especially on Discord.",
 	long_description=README,
 	long_description_content_type="text/markdown",
@@ -21,8 +21,10 @@ setup(
 	author_email="therandomlabsinc@gmail.com",
 	license="MIT",
 	classifiers=[
+		"Development Status :: 2 - Beta",
+		"Intended Audience :: Developers"
 		"License :: OSI Approved :: MIT License",
-		"Programming Language :: Python :: 3",
+		"Operating System :: OS Independent",
 		"Programming Language :: Python :: 3.7",
 	],
 	packages=find_namespace_packages()
