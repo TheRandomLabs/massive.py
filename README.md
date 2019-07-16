@@ -1,6 +1,6 @@
 # massive.py
 
-[![Foo](http://badge.fury.io/py/area.svg)](http://badge.fury.io/py/area)
+[![Foo](http://badge.fury.io/py/massive.py.svg)](http://badge.fury.io/py/massive.py)
 
 Utilities for converting text to massive text, especially on Discord.
 
