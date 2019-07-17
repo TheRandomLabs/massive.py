@@ -14,7 +14,7 @@ class Vanessa(massivizer.Massivizer):
 	def __init__(self, case_behavior=CaseBehavior.START_LOWERCASE, **kwargs):
 		super().__init__(**kwargs)
 		self.case_behavior = case_behavior
-		self._thread_local.lowercase = True
+		self._lowercase = True
 
 	@property
 	def _lowercase(self):
@@ -33,8 +33,8 @@ class Vanessa(massivizer.Massivizer):
 		if c == upper:
 			return c
 
-		self._thread_local.lowercase = not self._thread_local.lowercase
-		return c if self._thread_local.lowercase else upper
+		self._lowercase = not self._lowercase
+		return c if self._lowercase else upper
 
 	def finalize_output(self, output_string):
 		return output_string
