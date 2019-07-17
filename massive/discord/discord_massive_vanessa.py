@@ -6,7 +6,7 @@ from massive.discord import discord_massive
 class MassiveVanessa(discord_massive.Massive):
 	def __init__(self, massive_chance=0.5, **kwargs):
 		super().__init__(**kwargs)
-		self.massive_chance = 0.5
+		self.massive_chance = massive_chance
 
 	@property
 	def massive_chance(self):

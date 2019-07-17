@@ -87,7 +87,7 @@ class Massivizer(object):
 				to_add = self.convert(c)
 				length = len(to_add)
 
-				if self.max_part_length is 0 or line_length + length <= self.max_part_length:
+				if self.max_part_length == 0 or line_length + length <= self.max_part_length:
 					current_line += to_add
 					line_length += length
 				else:

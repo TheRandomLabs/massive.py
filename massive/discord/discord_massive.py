@@ -63,6 +63,113 @@ def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings
 	return ""
 
 
+def map_from_emoji(input_emoji, main_mappings=None, alternate_mappings=None):
+	if not main_mappings:
+		main_mappings = MAIN_MAPPINGS
+
+	if not alternate_mappings:
+		alternate_mappings = ALTERNATE_MAPPINGS
+
+	if input_emoji.startswith("regional_indicator_"):
+		return input_emoji[-1]
+
+	for c, emoji in main_mappings.items():
+		if emoji == input_emoji:
+			return c
+
+	for c, emojis in alternate_mappings.items():
+		for emoji in emojis:
+			if emoji == input_emoji:
+				return c
+
+	return ""
+
+
+def demassivize(input_string, main_mappings=None, alternate_mappings=None):
+	if not main_mappings:
+		main_mappings = MAIN_MAPPINGS
+
+	if not alternate_mappings:
+		alternate_mappings = ALTERNATE_MAPPINGS
+
+	output_string = ""
+
+	emoji = False
+	current_emoji = ""
+
+	skip_next_space = False
+
+	for c in input_string:
+		if skip_next_space:
+			skip_next_space = False
+
+			if c == ' ':
+				continue
+
+		if c.isspace() and emoji:
+			emoji = False
+			output_string += ":" + current_emoji
+			current_emoji = ""
+
+		if c != ':':
+			if emoji:
+				current_emoji += c
+			else:
+				output_string += c
+
+			continue
+
+		emoji = not emoji
+
+		if emoji:
+			continue
+
+		# :: is a colon and the start of a new emoji
+		if not current_emoji:
+			output_string += ":"
+			emoji = True
+			continue
+
+		# Added mapped emoji to output
+
+		mapped = map_from_emoji(
+			current_emoji,
+			main_mappings=main_mappings,
+			alternate_mappings=alternate_mappings
+		)
+
+		if mapped:
+			output_string += mapped
+		else:
+			output_string += ":" + current_emoji + ":"
+
+		current_emoji = ""
+		skip_next_space = True
+
+	if emoji:
+		output_string += ":" + current_emoji
+
+	return output_string
+
+
+def demassivize_recursively(input_string, main_mappings=None, alternate_mappings=None):
+	output_string = input_string
+	next_output_string = ""
+
+	while output_string != next_output_string:
+		if next_output_string:
+			output_string = next_output_string
+
+		demassivized = demassivize(
+			output_string,
+			main_mappings=main_mappings,
+			alternate_mappings=alternate_mappings
+		)
+		next_output_string = demassivized
+
+	return output_string
+
+
 class Massive(massivizer.Massivizer):
 	def __init__(
 			self,

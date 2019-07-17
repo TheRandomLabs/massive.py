@@ -10,12 +10,13 @@ class Vanessa(massivizer.Massivizer):
 		return input_string.lower()
 
 	def convert(self, c):
+		upper = c.upper()
+
+		if c == upper:
+			return c
+
 		self.__uppercase = not self.__uppercase
-
-		if self.__uppercase:
-			return c.upper()
-
-		return c
+		return upper if self.__uppercase else c
 
 	def finalize_output(self, output_string):
 		return output_string
