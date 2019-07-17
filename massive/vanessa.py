@@ -14,11 +14,14 @@ class Vanessa(massivizer.Massivizer):
 	def __init__(self, case_behavior=CaseBehavior.START_LOWERCASE, **kwargs):
 		super().__init__(**kwargs)
 		self.case_behavior = case_behavior
-		self._lowercase = True
 
 	@property
 	def _lowercase(self):
-		return self._thread_local.lowercase
+		try:
+			return self._thread_local.lowercase
+		except AttributeError:
+			self._lowercase = True
+			return True
 
 	@_lowercase.setter
 	def _lowercase(self, flag):

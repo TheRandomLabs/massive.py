@@ -181,7 +181,6 @@ class Massive(massivizer.Massivizer):
 		self.alternate_chance = alternate_chance
 		self.main_mappings = None
 		self.alternate_mappings = None
-		self._ends_with_emoji = False
 
 	@property
 	def alternate_chance(self):
@@ -209,7 +208,11 @@ class Massive(massivizer.Massivizer):
 
 	@property
 	def _ends_with_emoji(self):
-		return self._thread_local.ends_with_emoji
+		try:
+			return self._thread_local.ends_with_emoji
+		except AttributeError:
+			self._ends_with_emoji = False
+			return False
 
 	@_ends_with_emoji.setter
 	def _ends_with_emoji(self, flag):
