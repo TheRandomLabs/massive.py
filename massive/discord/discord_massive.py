@@ -181,7 +181,7 @@ class Massive(massivizer.Massivizer):
 		self.alternate_chance = alternate_chance
 		self.main_mappings = None
 		self.alternate_mappings = None
-		self.__ends_with_emoji = False
+		self._ends_with_emoji = False
 
 	@property
 	def alternate_chance(self):
@@ -207,6 +207,14 @@ class Massive(massivizer.Massivizer):
 	def alternate_mappings(self, mappings):
 		self.__alternate_mappings = mappings or ALTERNATE_MAPPINGS
 
+	@property
+	def _ends_with_emoji(self):
+		return self._thread_local.ends_with_emoji
+
+	@_ends_with_emoji.setter
+	def _ends_with_emoji(self, flag):
+		self._thread_local.ends_with_emoji = flag
+
 	def map_to_emoji(self, c):
 		return map_to_emoji(
 			c,
@@ -219,16 +227,16 @@ class Massive(massivizer.Massivizer):
 		return input_string
 
 	def convert(self, c):
-		self.__ends_with_emoji = False
+		self._ends_with_emoji = False
 
 		emoji = self.map_to_emoji(c)
 
 		if emoji:
-			self.__ends_with_emoji = True
+			self._ends_with_emoji = True
 			return ":" + emoji + ": "
 
 		return c
 
 	def finalize_output(self, output_string):
 		# If the output ends with an emoji, there is an extra space at the end that must be removed
-		return output_string[:-1] if self.__ends_with_emoji else output_string
+		return output_string[:-1] if self._ends_with_emoji else output_string

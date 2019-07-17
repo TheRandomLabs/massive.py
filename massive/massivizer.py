@@ -1,5 +1,5 @@
 import abc
-from threading import Lock
+import threading
 
 from massive.util import swap_chars
 
@@ -8,11 +8,11 @@ class Massivizer(object):
 	__metaclass__ = abc.ABCMeta
 
 	def __init__(self, newlines_separate_parts=False, max_part_length=0):
-		self.__lock = Lock()
 		self.newlines_start_new_parts = newlines_separate_parts
 		self.max_part_length = max_part_length
 		self.input_preprocessors = []
 		self.random_char_swapper = None
+		self._thread_local = threading.local()
 
 	@property
 	def max_part_length(self):
@@ -45,19 +45,7 @@ class Massivizer(object):
 	def finalize_output(self, output_string):
 		return output_string
 
-	# Applies random char swaps and custom input modifiers as well as preprocess_input
-	def __apply_input_preprocessors(self, input_string):
-		if self.random_char_swapper:
-			input_string = self.random_char_swapper.swap(input_string)
-
-		input_string = self.preprocess_input(input_string)
-
-		for input_modifier in self.input_preprocessors:
-			input_string = input_modifier(input_string)
-
-		return input_string
-
-	def __massivize(self, input_string):
+	def massivize(self, input_string):
 		input_lines = []
 		current_line = ""
 
@@ -101,8 +89,14 @@ class Massivizer(object):
 
 		return massivized
 
-	# Lock so that only one massivization can run at once
-	# Needed for massivizers such as discord_massive.Massive
-	def massivize(self, input_string):
-		with self.__lock:
-			return self.__massivize(input_string)
+	# Applies random char swaps and custom input modifiers as well as preprocess_input
+	def __apply_input_preprocessors(self, input_string):
+		if self.random_char_swapper:
+			input_string = self.random_char_swapper.swap(input_string)
+
+		input_string = self.preprocess_input(input_string)
+
+		for input_modifier in self.input_preprocessors:
+			input_string = input_modifier(input_string)
+
+		return input_string

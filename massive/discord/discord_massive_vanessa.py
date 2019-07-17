@@ -17,7 +17,7 @@ class MassiveVanessa(discord_massive.Massive):
 		self.__massive_chance = max(0.0, min(chance, 1.0))
 
 	def convert(self, c):
-		self.__ends_with_emoji = False
+		self._ends_with_emoji = False
 
 		if c == ' ':
 			return "  "
@@ -31,7 +31,7 @@ class MassiveVanessa(discord_massive.Massive):
 			emoji = self.map_to_emoji(c)
 
 			if emoji:
-				self.__ends_with_emoji = True
+				self._ends_with_emoji = True
 				return ":" + emoji + ": "
 
 			return c.upper()
