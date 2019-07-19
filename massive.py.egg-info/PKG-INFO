@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: massive.py
+Version: 0.4.3
+Summary: Utilities for converting text to massive text, especially on Discord.
+Home-page: https://github.com/TheRandomLabs/massive.py
+Author: TheRandomLabs
+Author-email: therandomlabsinc@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/TheRandomLabs/massive.py/issues
+Project-URL: Source Code, https://github.com/TheRandomLabs/massive.py
+Description: # massive.py
+        
+        [![Foo](http://badge.fury.io/py/massive.py.svg)](http://badge.fury.io/py/massive.py)
+        
+        Utilities for converting text to massive text, especially on Discord.
+        
+        ## Installation
+        
+        	$ pip install massive.py
+        
+        ## Example
+        
+        ```python
+        from massive.discord import discord_massive
+        
+        massivizer = discord_massive.Massive(alternate_chance=1.0)
+        massivizer.swap_random_chars(chance=0.02)
+        
+        for part in massivizer.massivize("Massive text"):
+        	print(part)
+        ```
+        
+        The above code generates this:
+        
+        ![](https://raw.githubusercontent.com/TheRandomLabs/massive.py/master/example.png)
+        
+        ## Massivizers
+        
+        * **Vanessa-case/Vanessa text**: aLtErNaTiNg CaPs.
+        * **Massive text (Discord)**: `regional_indicator` and other emojis on Discord.
+        * **Massive Vanessa text (Discord)**: A combination of massive text and lower case letters.
+        
+Keywords: massive text discord
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown

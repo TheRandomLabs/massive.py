@@ -1,0 +1,11 @@
+README.md
+setup.py
+massive/massivizer.py
+massive/vanessa.py
+massive.py.egg-info/PKG-INFO
+massive.py.egg-info/SOURCES.txt
+massive.py.egg-info/dependency_links.txt
+massive.py.egg-info/top_level.txt
+massive/discord/discord_massive.py
+massive/discord/discord_massive_vanessa.py
+massive/util/swap_chars.py
