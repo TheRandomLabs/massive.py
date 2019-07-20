@@ -42,10 +42,10 @@ ALTERNATE_MAPPINGS = {
 
 
 def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings=None):
-	if not main_mappings:
+	if main_mappings is None:
 		main_mappings = MAIN_MAPPINGS
 
-	if not alternate_mappings:
+	if alternate_mappings is None:
 		alternate_mappings = ALTERNATE_MAPPINGS
 
 	if 'A' <= c <= 'Z':
@@ -64,10 +64,10 @@ def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings
 
 
 def map_from_emoji(input_emoji, main_mappings=None, alternate_mappings=None):
-	if not main_mappings:
+	if main_mappings is None:
 		main_mappings = MAIN_MAPPINGS
 
-	if not alternate_mappings:
+	if alternate_mappings is None:
 		alternate_mappings = ALTERNATE_MAPPINGS
 
 	if input_emoji.startswith("regional_indicator_"):
@@ -86,10 +86,10 @@ def map_from_emoji(input_emoji, main_mappings=None, alternate_mappings=None):
 
 
 def demassivize(input_string, main_mappings=None, alternate_mappings=None):
-	if not main_mappings:
+	if main_mappings is None:
 		main_mappings = MAIN_MAPPINGS
 
-	if not alternate_mappings:
+	if alternate_mappings is None:
 		alternate_mappings = ALTERNATE_MAPPINGS
 
 	output_string = ""
