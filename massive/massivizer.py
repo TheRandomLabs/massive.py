@@ -32,6 +32,7 @@ class Massivizer(object):
 
 	def swap_random_chars(self, char_predicate=lambda c: 'a' <= c.lower() <= 'z', chance=0.04):
 		self.random_char_swapper = swap_chars.RandomCharSwapper(char_predicate, chance)
+		return self
 
 	@abc.abstractmethod
 	def preprocess_input(self, input_string):
