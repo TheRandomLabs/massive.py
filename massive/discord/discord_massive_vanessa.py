@@ -22,7 +22,7 @@ class MassiveVanessa(discord_massive.Massive):
 		if c == ' ':
 			return "  "
 
-		lower = random.random() < self.massive_chance
+		lower = random.random() > self.massive_chance
 
 		if 'a' <= c.lower() <= 'z':
 			if lower:
