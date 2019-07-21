@@ -4,7 +4,7 @@ from massive.discord import discord_massive
 
 
 class MassiveVanessa(discord_massive.Massive):
-	def __init__(self, massive_chance=0.65, **kwargs):
+	def __init__(self, massive_chance=0.35, **kwargs):
 		super().__init__(**kwargs)
 		self.massive_chance = massive_chance
 
