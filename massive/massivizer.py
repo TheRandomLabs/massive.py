@@ -30,6 +30,17 @@ class Massivizer(object):
 	def input_preprocessors(self, modifiers):
 		self.__input_preprocessors = modifiers or []
 
+	@property
+	def random_char_swap_chance(self):
+		return self.random_char_swapper.swap_chance if self.random_char_swapper else 0.0
+
+	@random_char_swap_chance.setter
+	def random_char_swap_chance(self, chance):
+		if not self.random_char_swapper:
+			self.swap_random_chars(chance=chance)
+		else:
+			self.random_char_swapper.swap_chance = chance
+
 	def swap_random_chars(self, char_predicate=lambda c: 'a' <= c.lower() <= 'z', chance=0.04):
 		self.random_char_swapper = swap_chars.RandomCharSwapper(char_predicate, chance)
 		return self
