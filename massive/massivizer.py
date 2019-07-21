@@ -8,7 +8,7 @@ class Massivizer(object):
 	__metaclass__ = abc.ABCMeta
 
 	def __init__(self, newlines_separate_parts=False, max_part_length=0):
-		self.newlines_start_new_parts = newlines_separate_parts
+		self.newlines_separate_parts = newlines_separate_parts
 		self.max_part_length = max_part_length
 		self.input_preprocessors = []
 		self.random_char_swapper = None
@@ -55,7 +55,7 @@ class Massivizer(object):
 				continue
 
 			# Useful if newlines are used to mark separate parts/messages
-			if c == '\n' and self.newlines_start_new_parts:
+			if c == '\n' and self.newlines_separate_parts:
 				input_lines.append(current_line)
 				current_line = ""
 				continue
