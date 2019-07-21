@@ -44,8 +44,8 @@ class Vanessa(massivizer.Massivizer):
 
 	def massivize(self, input_string):
 		if self.case_behavior == CaseBehavior.ALWAYS_START_LOWERCASE:
-			self._lowercase = True
-		elif self.case_behavior == CaseBehavior.ALWAYS_START_UPPERCASE:
 			self._lowercase = False
+		elif self.case_behavior == CaseBehavior.ALWAYS_START_UPPERCASE:
+			self._lowercase = True
 
 		return super().massivize(input_string)
