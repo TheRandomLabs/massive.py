@@ -46,8 +46,12 @@ ALTERNATE_MAPPINGS = {
 EMOJI_TO_UNICODE = {}
 
 for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items():
-	if k != ":zero:" and k != ":one:" and k != ":two:" and k != ":three:" and k != ":four:" and \
-			k != ":five" and k != ":six:" and k != ":seven:" and k != ":eight:" and k != ":nine:":
+	if k == ":black_circle_for_record:":
+		EMOJI_TO_UNICODE[":record_button:"] = v
+	elif v == '\U00002757':
+		EMOJI_TO_UNICODE[":exclamation:"] = v
+	elif k != ":zero:" and k != ":one:" and k != ":two:" and k != ":three:" and k != ":four:" and \
+		k != ":five" and k != ":six:" and k != ":seven:" and k != ":eight:" and k != ":nine:":
 		EMOJI_TO_UNICODE[k.replace("keycap_digit_", "").replace("keycap_", "")] = v
 
 UNICODE_TO_EMOJI = {v: k for k, v in EMOJI_TO_UNICODE.items()}
