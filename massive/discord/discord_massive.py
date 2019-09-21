@@ -1,4 +1,5 @@
 import random
+import re
 
 import emoji
 
@@ -41,6 +42,21 @@ ALTERNATE_MAPPINGS = {
 	"p": ["parking"],
 	"x": ["negative_squared_cross_mark"]
 }
+
+EMOJI_TO_UNICODE = {}
+
+for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items():
+	if k != ":zero:" and k != ":one:" and k != ":two:" and k != ":three:" and k != ":four:" and \
+			k != ":five" and k != ":six:" and k != ":seven:" and k != ":eight:" and k != ":nine:":
+		EMOJI_TO_UNICODE[k.replace("keycap_digit_", "").replace("keycap_", "")] = v
+
+UNICODE_TO_EMOJI = {v: k for k, v in EMOJI_TO_UNICODE.items()}
+
+EMOJI_REGEXP = re.compile(
+	'(' +
+	'|'.join(re.escape(u) for u in sorted(EMOJI_TO_UNICODE.values(), key=len, reverse=True)) +
+	')'
+)
 
 
 def map_to_emoji(c, alternate_chance=0.0, main_mappings=None, alternate_mappings=None):
@@ -87,6 +103,13 @@ def map_from_emoji(input_emoji, main_mappings=None, alternate_mappings=None):
 	return ""
 
 
+def demojize(string):
+	def replace(match):
+		return ':' + UNICODE_TO_EMOJI.get(match.group(0), match.group(0))[1:-1] + ':'
+
+	return re.sub('\ufe0f', '', EMOJI_REGEXP.sub(replace, string))
+
+
 def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 	if main_mappings is None:
 		main_mappings = MAIN_MAPPINGS
@@ -101,7 +124,7 @@ def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 
 	skip_next_space = False
 
-	input_string = emoji.demojize(input_string, use_aliases=True)
+	input_string = demojize(input_string)
 
 	for c in input_string:
 		if skip_next_space:
