@@ -1,5 +1,7 @@
 import random
 
+import emoji
+
 from massive import massivizer
 
 MAX_MESSAGE_LENGTH = 2000
@@ -35,7 +37,7 @@ ALTERNATE_MAPPINGS = {
 	"b": ["b"],
 	"i": ["information_source"],
 	"m": ["m"],
-	"o": ["o2", "zero"],
+	"o": ["o2"],
 	"p": ["parking"],
 	"x": ["negative_squared_cross_mark"]
 }
@@ -94,10 +96,12 @@ def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 
 	output_string = ""
 
-	emoji = False
+	is_emoji = False
 	current_emoji = ""
 
 	skip_next_space = False
+
+	input_string = emoji.demojize(input_string, use_aliases=True)
 
 	for c in input_string:
 		if skip_next_space:
@@ -106,28 +110,28 @@ def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 			if c == ' ':
 				continue
 
-		if c.isspace() and emoji:
-			emoji = False
+		if c.isspace() and is_emoji:
+			is_emoji = False
 			output_string += ":" + current_emoji
 			current_emoji = ""
 
 		if c != ':':
-			if emoji:
+			if is_emoji:
 				current_emoji += c
 			else:
 				output_string += c
 
 			continue
 
-		emoji = not emoji
+		is_emoji = not is_emoji
 
-		if emoji:
+		if is_emoji:
 			continue
 
 		# :: is a colon and the start of a new emoji
 		if not current_emoji:
 			output_string += ":"
-			emoji = True
+			is_emoji = True
 			continue
 
 		# Added mapped emoji to output
@@ -146,7 +150,7 @@ def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 		current_emoji = ""
 		skip_next_space = True
 
-	if emoji:
+	if is_emoji:
 		output_string += ":" + current_emoji
 
 	return output_string
