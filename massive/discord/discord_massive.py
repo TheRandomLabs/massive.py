@@ -103,11 +103,30 @@ def map_from_emoji(input_emoji, main_mappings=None, alternate_mappings=None):
 	return ""
 
 
-def demojize(string):
+def demojize(input_string, main_mappings=None, alternate_mappings=None):
+	if main_mappings is None:
+		main_mappings = MAIN_MAPPINGS
+
+	if alternate_mappings is None:
+		alternate_mappings = ALTERNATE_MAPPINGS
+
 	def replace(match):
+		emoji = UNICODE_TO_EMOJI.get(match.group(0), match.group(0))[1:-1]
+
+		if not emoji.startswith("regional_indicator_") and emoji not in main_mappings.values():
+			found = False
+
+			for emoji_list in alternate_mappings.values():
+				if emoji in emoji_list:
+					found = True
+					break
+
+			if not found:
+				return match.group(0)
+
 		return ':' + UNICODE_TO_EMOJI.get(match.group(0), match.group(0))[1:-1] + ':'
 
-	return re.sub('\ufe0f', '', EMOJI_REGEXP.sub(replace, string))
+	return re.sub('\ufe0f', '', EMOJI_REGEXP.sub(replace, input_string))
 
 
 def demassivize(input_string, main_mappings=None, alternate_mappings=None):
@@ -124,7 +143,7 @@ def demassivize(input_string, main_mappings=None, alternate_mappings=None):
 
 	skip_next_space = False
 
-	input_string = demojize(input_string)
+	input_string = demojize(input_string, main_mappings, alternate_mappings)
 
 	for c in input_string:
 		if skip_next_space:
