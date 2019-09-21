@@ -7,7 +7,7 @@ README = (CURRENT_DIRECTORY / "README.md").read_text()
 
 setup(
 	name="massive.py",
-	version="0.4.8",
+	version="0.5.0",
 	description="Utilities for converting text to massive text, especially on Discord.",
 	long_description=README,
 	long_description_content_type="text/markdown",
@@ -27,5 +27,8 @@ setup(
 		"Operating System :: OS Independent",
 		"Programming Language :: Python :: 3.7",
 	],
-	packages=find_namespace_packages()
+	packages=find_namespace_packages(),
+	install_requires=[
+		"emoji"
+	]
 )
